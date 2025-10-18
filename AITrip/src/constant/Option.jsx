@@ -23,14 +23,14 @@ export const SelectTravelList=[
     },
       {
         id:3,
-        title:" Faimily",
+        title:"Family",
         desc:"Family trips can be a great way to bond and create lasting memories.",
         icon:family,
         people:"3 to 5 People"
     },
      {
         id:4,
-        title:"Frindes",
+        title:"Friends",
         desc:"Traveling with friends can be a fun and exciting experience.",
         icon:friends,
         people:"2 to 5 People"
