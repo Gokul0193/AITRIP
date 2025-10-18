@@ -1,11 +1,7 @@
 import { GoogleGenerativeAI } from "@google/generative-ai";
 
-const API_KEY = import.meta.env.VITE_GEMINI_API_KEY; 
+const API_KEY = import.meta.env.VITE_GEMINI_API_KEY;
 const genAI = new GoogleGenerativeAI(API_KEY);
-
-
-
-
 
 // Function to generate AI response (JSON)
 export const generateAIResponse = async (prompt) => {
@@ -24,39 +20,65 @@ export const generateAIResponse = async (prompt) => {
   }
 };
 
-// Function to build prompt dynamically (Stricter URL Rules)
+// Function to build prompt dynamically (Strict JSON format)
 export const buildTravelPrompt = ({ location, travelType, budget, days }) => {
   return `
-Generate a ${days}-day travel plan for ${location} for a ${travelType} group with a ${budget} budget.
-Return the result strictly in **JSON format**.
+Generate a ${days}-day travel plan for ${location} for a ${travelType} group with a ${budget} budget.hotel details atelast 4 hotels.
+The response must be in the following JSON format:
+You must return the result **strictly as a valid JSON object** with the exact structure shown below — no explanations, no extra text.
 
-The JSON must include a "hotels" list and a "daily_itinerary" list.
+---
 
-For every hotel, provide:
-- hotelName
-- hotelAddress
-- price
-- **hotel_image_url**
-- geoCoordinates
-- rating
-- description
+### 🎯 REQUIRED JSON FORMAT:
 
-For every itinerary place, provide:
-- placeName
-- placeDetails
-- **place_image_url**
-- geoCoordinates
-- ticketPricing
-- rating
-- bestTimeToVisit
+{
+  "location": "string",
+  "total_days": number,
+  "budget": "string",
+  "travel_type": "string",
+  "hotels": [
+    {
+      "hotelName": "string",
+      "hotelAddress": "string",
+      "price": "string",
+      "hotel_image_url": "https://upload.wikimedia.org/....(direct_image).jpg",
+      "geoCoordinates": {
+        "lat": number,
+        "lng": number
+      },
+      "rating": number,
+      "description": "string"
+    }
+  ],
+  "daily_itinerary": [
+    {
+      "day": number,
+      "places": [
+        {
+          "placeName": "string",
+          "placeDetails": "string (1 short sentence)",
+          "place_image_url": "https://upload.wikimedia.org/....(direct_image).jpg",
+          "geoCoordinates": {
+            "lat": number,
+            "lng": number
+          },
+          "ticketPricing": "string",
+          "rating": number,
+          "bestTimeToVisit": "string"
+        }
+      ]
+    }
+  ]
+}
 
-**CRITICAL INSTRUCTIONS FOR ALL IMAGE URLs:**
-1.  **SOURCE MUST BE WIKIMEDIA COMMONS.** You are strictly forbidden from using any other source. Every single image URL must start with "https://upload.wikimedia.org/".
-2.  **DIRECT IMAGE LINK ONLY.** The URL must end in a file extension like .jpg, .jpeg, or .png. It must be a direct link to the image file itself, not a webpage.
-3.  **NO TEMPORARY OR API LINKS.** Verify that the URL is static and does not contain any query parameters like "?", "ixid=", "token=", "s=", etc.
-4.  **VALIDATE THE URL.** Before outputting the JSON, mentally verify that the URL you are providing is a real, public, and permanent link from Wikimedia Commons that matches the location.
+---
 
-Example of a PERFECT URL: "https://upload.wikimedia.org/wikipedia/commons/a/a4/Rodeo_Drive_Beverly_Hills_CA.jpg"
-Any other format is a failure.
-`;
+### ⚠️ CRITICAL INSTRUCTIONS FOR IMAGE URLS:
+1. All image URLs **must start** with \`https://upload.wikimedia.org/\`.
+2. URLs must be **direct image links** ending in .jpg, .jpeg, or .png.
+3. **Do not include** query parameters like \`?\`, \`ixid=\`, \`token=\`, etc.
+4. Ensure all links are valid Wikimedia Commons images related to ${location}.
+
+Generate exactly this JSON — nothing else.
+  `;
 };

@@ -3,6 +3,8 @@ import { doc, getDoc } from 'firebase/firestore';
 import React, { useEffect } from 'react'
 import { useParams } from 'react-router-dom'
 import Information from './components/Information';
+import { Hotel } from './components/Hotel';
+import PlacesToVisit from './components/PlacesToVisit';
 
 const ViewTrip = () => {
     const {tripid}=useParams();
@@ -28,8 +30,10 @@ const ViewTrip = () => {
     }
     
   return (
-    <div>
+    <div className='p-10 md:px-20 lg:px-44 xl:px-56 flex flex-col gap-10'>
       <Information trip={trip}/>
+      <Hotel trip={trip}/>
+      <PlacesToVisit trip={trip}/>
     </div>
   )
 }
