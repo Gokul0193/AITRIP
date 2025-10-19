@@ -67,17 +67,17 @@ export const Header = () => {
     <div className="p-3 shadow-md flex justify-between items-center px-5">
       {/* ✅ Logo */}
       <a href="/create-trip">
-      <img src="/logo.svg" alt="Logo" className="w-56" />
+      <img src="/logo.svg" alt="Logo" className="md:w-56 lg:w-56 xl:w-56 w-42" />
       </a>
       <div>
         {user ? (
           <div className="flex items-center justify-between gap-5">
             <a href="/my-trip">
             <Button
-              className="p-5 px-11 cursor-pointer bg-gray-300"
+              className="p-5  cursor-pointer bg-gray-300 "
               variant="outline"
             >
-              My Trips <MdTravelExplore />
+              Trips <MdTravelExplore />
             </Button>
             </a>
 
@@ -86,7 +86,7 @@ export const Header = () => {
                 <img
                   src={user?.picture}
                   alt="User"
-                  className="w-10 h-10 rounded-full z-10 cursor-pointer"
+                  className="w-10 h-10 rounded-full z-10 cursor-pointer mr-4"
                 />
               </PopoverTrigger>
               <PopoverContent className="text-center cursor-pointer">
