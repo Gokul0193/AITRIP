@@ -86,7 +86,7 @@ export const Header = () => {
                 <img
                   src={user?.picture}
                   alt="User"
-                  className="w-10 h-10 rounded-full z-10 cursor-pointer mr-4"
+                  className="w-10 h-10 rounded-full z-10 cursor-pointer mr-2"
                 />
               </PopoverTrigger>
               <PopoverContent className="text-center cursor-pointer">
